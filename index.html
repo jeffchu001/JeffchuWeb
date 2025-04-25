@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akamai 測試頁面</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #dynamic-content {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>歡迎來到我的測試網站！</h1>
+    <p>這是一個用於測試 Akamai 功能的簡單 HTML 頁面。</p>
+
+    <div id="static-content">
+        <h2>靜態內容</h2>
+        <p>這部分內容是直接寫在 HTML 裡的，應該會被 Akamai 緩存。</p>
+    </div>
+
+    <div id="dynamic-content">
+        <h2>動態內容</h2>
+        <p id="current-time">載入中...</p>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("current-time").textContent = "目前時間：" + now.toLocaleTimeString();
+        }
+
+        // 每秒更新一次時間
+        setInterval(updateTime, 1000);
+
+        // 首次載入時更新一次
+        updateTime();
+    </script>
+</body>
+</html>
