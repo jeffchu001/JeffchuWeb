@@ -10,51 +10,361 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
-
+    <!-- 引入 Font Awesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
     <style>
-        body {
-            font-family: sans-serif;
+        :root {
+            --primary-color: #0072bc;
+            --secondary-color: #34a8df;
+            --accent-color: #ff6b00;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+            --text-color: #333;
+            --light-text: #fff;
         }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+            padding-top: 56px;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--light-text) !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+        
+        .content-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .content-card h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .content-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .content-card-header i {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--accent-color);
+        }
+        
         #dynamic-content {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            background-color: white;
+            transition: background-color 0.3s ease;
+        }
+        
+        #dynamic-content.updated {
+            background-color: rgba(255, 107, 0, 0.1);
+        }
+        
+        .clock-container {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+        
+        .clock-icon {
+            color: var(--accent-color);
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .image-description {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            margin-right: 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                margin-top: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>TEST Web</h1>
-    <p>Akamai CDN Site failover</p>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Akamai Test Web</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home"></i> 首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#static-content"><i class="fas fa-file-alt"></i> 靜態內容</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dynamic-content"><i class="fas fa-sync-alt"></i> 動態內容</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div id="static-content">
-        <h2>靜態內容</h2>
-        <p>這部分內容是直接寫在 HTML 裡的，應該會被 Akamai 緩存</p>
-        <p>源站檔案</p>
-        <img src="img/akamai.png" alt="akamai">
-        <p>外部連結引用</p>
-        <img src="https://github.com/jeffchu001/JeffchuWeb/blob/0c6fd1ea3c3a1bece247a85586c5abeb0412d609/akamai.png?raw=true" alt="akamai(外部連結)">
+    <!-- 英雄區塊 -->
+    <div class="hero-section">
+        <div class="container text-center">
+            <h1 class="hero-title">Akamai CDN 測試網站</h1>
+            <p class="hero-subtitle">展示 Akamai CDN 站點容錯功能的實時演示</p>
+            <button class="btn btn-light btn-lg" id="refresh-btn">
+                <i class="fas fa-sync-alt"></i> 刷新頁面
+            </button>
+        </div>
     </div>
 
-    <div id="dynamic-content">
-        <h2>動態內容</h2>
-        <p id="current-time">載入中...</p>
+    <div class="container">
+        <!-- 靜態內容區塊 -->
+        <div class="content-card" id="static-content">
+            <div class="content-card-header">
+                <i class="fas fa-file-alt"></i>
+                <h2>靜態內容</h2>
+            </div>
+            <p>這部分內容是直接寫在 HTML 裡的，將會被 Akamai CDN 緩存起來，提高頁面載入速度並減輕源站負擔。</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="image-container">
+                        <h5><i class="fas fa-server"></i> 源站檔案</h5>
+                        <img src="img/akamai.png" alt="akamai" class="img-fluid">
+                        <p class="image-description">從網站源站加載的 Akamai 圖片</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="image-container">
+                        <h5><i class="fas fa-external-link-alt"></i> 外部連結引用</h5>
+                        <img src="https://github.com/jeffchu001/JeffchuWeb/blob/0c6fd1ea3c3a1bece247a85586c5abeb0412d609/akamai.png?raw=true" alt="akamai(外部連結)" class="img-fluid">
+                        <p class="image-description">從外部 GitHub 引用的 Akamai 圖片</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 動態內容區塊 -->
+        <div class="content-card" id="dynamic-content">
+            <div class="content-card-header">
+                <i class="fas fa-sync-alt"></i>
+                <h2>動態內容</h2>
+            </div>
+            <p>這部分內容是動態生成的，每次更新都會顯示實時數據，不會被 CDN 緩存。</p>
+            
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> 動態內容會實時更新，展示了從源站直接獲取的數據。
+            </div>
+            
+            <div class="clock-container">
+                <i class="fas fa-clock clock-icon"></i>
+                <span id="current-time">載入中...</span>
+            </div>
+            
+            <div class="mt-4">
+                <h5><i class="fas fa-chart-line"></i> 效能監控</h5>
+                <div class="progress mt-2">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">CDN 效能: 85%</div>
+                </div>
+                <div class="progress mt-2">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">源站響應: 65%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 額外信息卡片 -->
+        <div class="content-card">
+            <div class="content-card-header">
+                <i class="fas fa-info-circle"></i>
+                <h2>關於 Akamai CDN</h2>
+            </div>
+            <p>Akamai 是全球領先的內容分發網絡 (CDN) 服務提供商，通過分布在世界各地的伺服器，幫助網站加速內容傳遞、提高可用性並保護免受網絡攻擊。</p>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <i class="fas fa-tachometer-alt fa-3x mb-3" style="color: var(--accent-color);"></i>
+                        <h5>加速內容傳遞</h5>
+                        <p>減少延遲，提高用戶體驗</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt fa-3x mb-3" style="color: var(--accent-color);"></i>
+                        <h5>網站安全防護</h5>
+                        <p>抵禦 DDoS 攻擊和網絡威脅</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <i class="fas fa-server fa-3x mb-3" style="color: var(--accent-color);"></i>
+                        <h5>站點容錯功能</h5>
+                        <p>確保網站高可用性和穩定性</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    <!-- 頁腳 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <p>&copy; 2025 Akamai Test Web. 保留所有權利。</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-home"></i> 首頁</a>
+                    <a href="#"><i class="fas fa-info-circle"></i> 關於</a>
+                    <a href="#"><i class="fas fa-envelope"></i> 聯繫我們</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- 引入 Bootstrap 的 JS 檔案 -->
     <script src="js/bootstrap.bundle.min.js"></script>
-
     <script>
         function updateTime() {
             const now = new Date();
-            document.getElementById("current-time").textContent = "目前時間：" + now.toLocaleTimeString();
+            const timeElement = document.getElementById("current-time");
+            timeElement.textContent = "目前時間：" + now.toLocaleTimeString();
+            
+            // 添加視覺反饋
+            const dynamicContent = document.getElementById("dynamic-content");
+            dynamicContent.classList.add("updated");
+            setTimeout(() => {
+                dynamicContent.classList.remove("updated");
+            }, 500);
         }
-
+        
         // 每秒更新一次時間
         setInterval(updateTime, 1000);
-
+        
         // 首次載入時更新一次
         updateTime();
+        
+        // 刷新按鈕功能
+        document.getElementById("refresh-btn").addEventListener("click", function() {
+            location.reload();
+        });
+        
+        // 平滑滾動功能
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
