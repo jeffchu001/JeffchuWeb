@@ -10,11 +10,40 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
     <link rel="stylesheet" href="css/bootstrap-utilities.min.css">
-    <!-- 引入 Font Awesome 圖標 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- 引入 Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
+    
     <style>
+        /* 基本圖標字體定義 (替代 Font Awesome) */
+        @font-face {
+            font-family: 'Akamai Icons';
+            src: url('fonts/akamai-icons.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        .akamai-icon {
+            font-family: 'Akamai Icons';
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+        }
+        
+        /* Google 字體替代方案 */
+        @font-face {
+            font-family: 'Noto Sans TC';
+            src: url('fonts/noto-sans-tc-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'Noto Sans TC';
+            src: url('fonts/noto-sans-tc-bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
         :root {
             --primary-color: #0072bc;
             --secondary-color: #34a8df;
@@ -26,7 +55,7 @@
         }
         
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
             color: var(--text-color);
             background-color: var(--light-bg);
             line-height: 1.6;
@@ -43,6 +72,10 @@
             color: var(--light-text) !important;
         }
         
+        .nav-icon {
+            margin-right: 5px;
+        }
+        
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: var(--light-text);
@@ -50,6 +83,26 @@
             margin-bottom: 2rem;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/akamai-pattern.png');
+            background-repeat: repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
         
         .hero-title {
@@ -62,6 +115,24 @@
             margin-bottom: 2rem;
         }
         
+        .akamai-logo {
+            max-height: 40px;
+            margin-right: 10px;
+        }
+        
+        .btn-akamai {
+            background-color: var(--accent-color);
+            border: none;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-akamai:hover {
+            background-color: #e65c00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
         .content-card {
             background-color: white;
             border-radius: 10px;
@@ -69,6 +140,7 @@
             padding: 1.5rem;
             margin-bottom: 2rem;
             transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary-color);
         }
         
         .content-card:hover {
@@ -89,10 +161,13 @@
             margin-bottom: 1rem;
         }
         
-        .content-card-header i {
+        .content-card-icon {
             font-size: 1.5rem;
             margin-right: 0.75rem;
             color: var(--accent-color);
+            width: 24px;
+            height: 24px;
+            text-align: center;
         }
         
         #dynamic-content {
@@ -134,12 +209,44 @@
             text-align: center;
         }
         
+        .image-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+        
         .image-description {
             font-size: 0.9rem;
             color: #666;
             text-align: center;
             margin-top: 0.5rem;
             font-style: italic;
+        }
+        
+        .alert-akamai {
+            background-color: rgba(0, 114, 188, 0.1);
+            border-left: 4px solid var(--primary-color);
+            color: var(--text-color);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            background-color: rgba(255, 107, 0, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
         
         footer {
@@ -167,6 +274,55 @@
             color: var(--secondary-color);
         }
         
+        /* 簡單的圖標實現 (替代 Font Awesome) */
+        .icon-home::before {
+            content: "🏠";
+        }
+        
+        .icon-file::before {
+            content: "📄";
+        }
+        
+        .icon-sync::before {
+            content: "🔄";
+        }
+        
+        .icon-info::before {
+            content: "ℹ️";
+        }
+        
+        .icon-clock::before {
+            content: "🕒";
+        }
+        
+        .icon-server::before {
+            content: "🖥️";
+        }
+        
+        .icon-shield::before {
+            content: "🛡️";
+        }
+        
+        .icon-speed::before {
+            content: "⚡";
+        }
+        
+        .icon-chart::before {
+            content: "📊";
+        }
+        
+        .icon-link::before {
+            content: "🔗";
+        }
+        
+        .icon-refresh::before {
+            content: "🔄";
+        }
+        
+        .icon-envelope::before {
+            content: "✉️";
+        }
+        
         @media (max-width: 768px) {
             .hero-section {
                 padding: 3rem 0;
@@ -187,20 +343,29 @@
     <!-- 導航欄 -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Akamai Test Web</a>
+            <a class="navbar-brand" href="#">
+                <img src="img/akamai-logo-white.png" alt="Akamai Logo" class="akamai-logo">
+                Akamai Test Web
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="fas fa-home"></i> 首頁</a>
+                        <a class="nav-link active" href="#">
+                            <span class="icon-home"></span> 首頁
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#static-content"><i class="fas fa-file-alt"></i> 靜態內容</a>
+                        <a class="nav-link" href="#static-content">
+                            <span class="icon-file"></span> 靜態內容
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#dynamic-content"><i class="fas fa-sync-alt"></i> 動態內容</a>
+                        <a class="nav-link" href="#dynamic-content">
+                            <span class="icon-sync"></span> 動態內容
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -209,11 +374,12 @@
 
     <!-- 英雄區塊 -->
     <div class="hero-section">
-        <div class="container text-center">
+        <div class="container text-center hero-content">
+            <img src="img/akamai.png" alt="Akamai" class="mb-4" style="max-width: 200px;">
             <h1 class="hero-title">Akamai CDN 測試網站</h1>
             <p class="hero-subtitle">展示 Akamai CDN 站點容錯功能的實時演示</p>
-            <button class="btn btn-light btn-lg" id="refresh-btn">
-                <i class="fas fa-sync-alt"></i> 刷新頁面
+            <button class="btn btn-akamai btn-lg" id="refresh-btn">
+                <span class="icon-refresh"></span> 刷新頁面
             </button>
         </div>
     </div>
@@ -222,7 +388,9 @@
         <!-- 靜態內容區塊 -->
         <div class="content-card" id="static-content">
             <div class="content-card-header">
-                <i class="fas fa-file-alt"></i>
+                <div class="content-card-icon">
+                    <span class="icon-file"></span>
+                </div>
                 <h2>靜態內容</h2>
             </div>
             <p>這部分內容是直接寫在 HTML 裡的，將會被 Akamai CDN 緩存起來，提高頁面載入速度並減輕源站負擔。</p>
@@ -230,14 +398,18 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="image-container">
-                        <h5><i class="fas fa-server"></i> 源站檔案</h5>
+                        <div class="image-title">
+                            <span class="icon-server"></span> 源站檔案
+                        </div>
                         <img src="img/akamai.png" alt="akamai" class="img-fluid">
                         <p class="image-description">從網站源站加載的 Akamai 圖片</p>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="image-container">
-                        <h5><i class="fas fa-external-link-alt"></i> 外部連結引用</h5>
+                        <div class="image-title">
+                            <span class="icon-link"></span> 外部連結引用
+                        </div>
                         <img src="https://github.com/jeffchu001/JeffchuWeb/blob/0c6fd1ea3c3a1bece247a85586c5abeb0412d609/akamai.png?raw=true" alt="akamai(外部連結)" class="img-fluid">
                         <p class="image-description">從外部 GitHub 引用的 Akamai 圖片</p>
                     </div>
@@ -248,22 +420,26 @@
         <!-- 動態內容區塊 -->
         <div class="content-card" id="dynamic-content">
             <div class="content-card-header">
-                <i class="fas fa-sync-alt"></i>
+                <div class="content-card-icon">
+                    <span class="icon-sync"></span>
+                </div>
                 <h2>動態內容</h2>
             </div>
             <p>這部分內容是動態生成的，每次更新都會顯示實時數據，不會被 CDN 緩存。</p>
             
-            <div class="alert alert-info">
-                <i class="fas fa-info-circle"></i> 動態內容會實時更新，展示了從源站直接獲取的數據。
+            <div class="alert alert-akamai">
+                <span class="icon-info"></span> 動態內容會實時更新，展示了從源站直接獲取的數據。
             </div>
             
             <div class="clock-container">
-                <i class="fas fa-clock clock-icon"></i>
+                <span class="icon-clock clock-icon"></span>
                 <span id="current-time">載入中...</span>
             </div>
             
             <div class="mt-4">
-                <h5><i class="fas fa-chart-line"></i> 效能監控</h5>
+                <div class="image-title">
+                    <span class="icon-chart"></span> 效能監控
+                </div>
                 <div class="progress mt-2">
                     <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">CDN 效能: 85%</div>
                 </div>
@@ -276,29 +452,37 @@
         <!-- 額外信息卡片 -->
         <div class="content-card">
             <div class="content-card-header">
-                <i class="fas fa-info-circle"></i>
+                <div class="content-card-icon">
+                    <span class="icon-info"></span>
+                </div>
                 <h2>關於 Akamai CDN</h2>
             </div>
             <p>Akamai 是全球領先的內容分發網絡 (CDN) 服務提供商，通過分布在世界各地的伺服器，幫助網站加速內容傳遞、提高可用性並保護免受網絡攻擊。</p>
             <div class="row mt-4">
                 <div class="col-md-4">
                     <div class="text-center">
-                        <i class="fas fa-tachometer-alt fa-3x mb-3" style="color: var(--accent-color);"></i>
-                        <h5>加速內容傳遞</h5>
+                        <div class="feature-icon">
+                            <span class="icon-speed"></span>
+                        </div>
+                        <h5 class="feature-title">加速內容傳遞</h5>
                         <p>減少延遲，提高用戶體驗</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="text-center">
-                        <i class="fas fa-shield-alt fa-3x mb-3" style="color: var(--accent-color);"></i>
-                        <h5>網站安全防護</h5>
+                        <div class="feature-icon">
+                            <span class="icon-shield"></span>
+                        </div>
+                        <h5 class="feature-title">網站安全防護</h5>
                         <p>抵禦 DDoS 攻擊和網絡威脅</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="text-center">
-                        <i class="fas fa-server fa-3x mb-3" style="color: var(--accent-color);"></i>
-                        <h5>站點容錯功能</h5>
+                        <div class="feature-icon">
+                            <span class="icon-server"></span>
+                        </div>
+                        <h5 class="feature-title">站點容錯功能</h5>
                         <p>確保網站高可用性和穩定性</p>
                     </div>
                 </div>
@@ -314,9 +498,9 @@
                     <p>&copy; 2025 Akamai Test Web. 保留所有權利。</p>
                 </div>
                 <div class="footer-links">
-                    <a href="#"><i class="fas fa-home"></i> 首頁</a>
-                    <a href="#"><i class="fas fa-info-circle"></i> 關於</a>
-                    <a href="#"><i class="fas fa-envelope"></i> 聯繫我們</a>
+                    <a href="#"><span class="icon-home"></span> 首頁</a>
+                    <a href="#"><span class="icon-info"></span> 關於</a>
+                    <a href="#"><span class="icon-envelope"></span> 聯繫我們</a>
                 </div>
             </div>
         </div>
