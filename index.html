@@ -269,86 +269,6 @@
             margin-top: 12px;
         }
 
-        /* 動態內容樣式 */
-        #dynamic-content {
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        #dynamic-content.updated {
-            background-color: rgba(255, 107, 0, 0.05);
-        }
-
-        .alert-akamai {
-            background-color: rgba(0, 114, 188, 0.08);
-            border-left: 4px solid var(--akamai-blue);
-            border-radius: 6px;
-            padding: 15px;
-            color: var(--akamai-text);
-            display: flex;
-            align-items: center;
-        }
-
-        .alert-akamai .icon {
-            font-size: 20px;
-            color: var(--akamai-blue);
-            margin-right: 10px;
-        }
-
-        .clock-container {
-            display: flex;
-            align-items: center;
-            background-color: var(--akamai-gray);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .clock-icon {
-            font-size: 24px;
-            color: var(--akamai-orange);
-            margin-right: 15px;
-        }
-
-        #current-time {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        /* 進度條樣式 */
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .progress-title {
-            font-weight: 500;
-            color: var(--akamai-dark);
-        }
-
-        .progress-value {
-            font-weight: 600;
-            color: var(--akamai-blue);
-        }
-
-        .progress {
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            background-color: #e9ecef;
-            margin-bottom: 15px;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .progress-bar-cdn {
-            background: linear-gradient(to right, #2ecc71, #27ae60);
-        }
-
-        .progress-bar-origin {
-            background: linear-gradient(to right, #3498db, #2980b9);
-        }
-
         /* 特性區塊樣式 */
         .feature-card {
             text-align: center;
@@ -522,14 +442,6 @@
                             靜態內容
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#dynamic-content">
-                            <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
-                                <path fill="currentColor" d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8V3h-5l2.26 2.26A7 7 0 105.8 19.6l1.4-1.4A5 5 0 1112 7v5l4-3 4 3v-5h-4v5l-4-3-1 .75V12H21z"></path>
-                            </svg>
-                            動態內容
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -612,93 +524,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 動態內容區塊 -->
-        <div class="content-card" id="dynamic-content">
-            <div class="card-header">
-                <div class="card-title-wrapper">
-                    <div class="card-icon">
-                        <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
-                            <path fill="currentColor" d="M21 12a9 9 0 11-9-9c2.52 0 4.93 1 6.74 2.74L21 8V3h-5l2.26 2.26A7 7 0 105.8 19.6l1.4-1.4A5 5 0 1112 7v5l4-3 4 3v-5h-4v5l-4-3-1 .75V12H21z"></path>
-                        </svg>
-                    </div>
-                    <h2 class="card-title">動態內容</h2>
-                </div>
-                <div class="card-divider"></div>
-            </div>
-            <div class="card-body">
-                <p>這部分內容是動態生成的，每次更新都會顯示實時數據，不會被 CDN 緩存。動態內容通常直接從源站獲取，這樣可以確保數據的即時性和準確性。</p>
-                
-                <div class="alert-akamai">
-                    <svg class="icon" viewBox="0 0 24 24" width="20" height="20">
-                        <circle fill="currentColor" cx="12" cy="12" r="10"></circle>
-                        <line stroke="white" stroke-width="2" x1="12" y1="8" x2="12" y2="12"></line>
-                        <line stroke="white" stroke-width="2" x1="12" y1="16" x2="12" y2="16"></line>
-                    </svg>
-                    動態內容會實時更新，展示了從源站直接獲取的數據，不受 CDN 緩存影響。
-                </div>
-                
-                <div class="clock-container">
-                    <svg class="icon clock-icon" viewBox="0 0 24 24">
-                        <circle fill="none" stroke="currentColor" cx="12" cy="12" r="10"></circle>
-                        <polyline fill="none" stroke="currentColor" points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    <span id="current-time">載入中...</span>
-                </div>
-                
-                <footer class="text-center p-4 mt-5">© 2025 Akamai Test Web</footer>
-                
-                <script>
-                function updateTime() {
-                    const now = new Date();
-                    const formattedTime = now.toLocaleTimeString();
-                    document.getElementById('current-time').textContent = formattedTime;
-                }
-                updateTime();
-                setInterval(updateTime, 1000);
-            
-                fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('ip-info').textContent = `你的IP: ${data.ip}，來自 ${data.city}, ${data.country}`;
-                    })
-                    .catch(error => {
-                        document.getElementById('ip-info').textContent = '無法取得 IP 資訊';
-                    });
-            
-                const toggleBtn = document.getElementById('darkmode-toggle');
-                toggleBtn.addEventListener('click', () => {
-                    document.body.classList.toggle('dark-mode');
-                    toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-                });
-                </script>
-                
-                <div class="mt-4">
-                    <div class="image-title">
-                        <svg class="icon" viewBox="0 0 24 24" width="18" height="18">
-                            <path fill="currentColor" d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z"></path>
-                        </svg>
-                        效能監控
-                    </div>
-                    
-                    <div class="progress-label">
-                        <span class="progress-title">CDN 效能</span>
-                        <span class="progress-value">85%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-cdn" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    
-                    <div class="progress-label">
-                        <span class="progress-title">源站回應</span>
-                        <span class="progress-value">65%</span>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-origin" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
         <!-- 額外信息卡片 -->
         <div class="content-card">
@@ -716,4 +541,57 @@
                 <div class="card-divider"></div>
             </div>
             <div class="card-body">
-                <p>Akamai 是全球領先的內容分發網絡 (CDN) 服務提供商，通過分布在世界各地的數千個伺服器節點，幫助網站加速內容傳遞、提高可用性
+                <p>Akamai 是全球領先的內容分發網絡 (CDN) 服務提供商，通過分布在世界各地的數千個伺服器節點，幫助網站加速內容傳遞、提高可用性</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 頁腳 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <svg class="footer-logo" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#ffffff" d="M40,10 L160,10 C170,10 180,20 180,25 C180,30 170,40 160,40 L40,40 C30,40 20,30 20,25 C20,20 30,10 40,10 Z"></path>
+                        <text x="100" y="28" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="18" fill="var(--akamai-blue)">AKAMAI</text>
+                    </svg>
+                    <p class="copyright">© 2025 Akamai Technologies, Inc. All Rights Reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"></path>
+                        </svg>
+                        登入
+                    </a>
+                    <a href="#">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"></path>
+                            <polyline fill="none" stroke="currentColor" points="14 2 14 8 20 8"></polyline>
+                            <line stroke="currentColor" x1="16" y1="13" x2="8" y2="13"></line>
+                            <line stroke="currentColor" x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline fill="none" stroke="currentColor" points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        文件
+                    </a>
+                    <a href="#">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor" d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
+                        </svg>
+                        聯絡我們
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 檔案 -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 刷新按鈕功能
+        document.getElementById('refresh-btn').addEventListener('click', function() {
+            location.reload();
+        });
+    </script>
+</body>
+</html>
